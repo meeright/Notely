@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notely - แอปจดบันทึกสุดน่ารัก</title>
+    
+    <!-- เพิ่มฟอนต์ Buttons & Patches และ Anuphan จาก Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Buttons+Patches&family=Anuphan:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        /* ฟอนต์สำหรับภาษาไทย */
+        .thai-font {
+            font-family: 'Anuphan', sans-serif;
+        }
+        
+        /* ฟอนต์สำหรับภาษาอังกฤษ */
+        .english-font {
+            font-family: 'Buttons & Patches', cursive;
+        }
+        
+        body {
+            background-image: url('https://i.postimg.cc/zvdsdNbJ/home-01.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        /* แท็บด้านบนขวา */
+        .nav-tabs {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            z-index: 100;
+        }
+        
+        .tab-button {
+            background-color: rgba(255, 255, 255, 0.7);
+            border: none;
+            border-radius: 20px;
+            padding: 10px 15px;
+            margin-left: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #FF69B4;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+        }
+        
+        .tab-button:hover {
+            background-color: rgba(255, 255, 255, 0.9);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .tab-button.active {
+            background-color: #FF69B4;
+            color: white;
+        }
+        
+        .tab-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+        }
+        
+        /* ไอคอนปฏิทิน */
+        .icon-calendar {
+            position: relative;
+            width: 20px;
+            height: 20px;
+        }
+        
+        .icon-calendar::before {
+            content: "";
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #FF69B4;
+            border-radius: 2px;
+        }
+        
+        .icon-calendar::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 6px;
+            width: 8px;
+            height: 2px;
+            background-color: #FF69B4;
+        }
+        
+        .tab-button.active .icon-calendar::before,
+        .tab-button.active .icon-calendar::after {
+            border-color: white;
+            background-color: white;
+        }
+        
+        /* ไอคอนรายการ */
+        .icon-list {
+            position: relative;
+            width: 20px;
+            height: 20px;
+        }
+        
+        .icon-list::before {
+            content: "";
+            position: absolute;
+            top: 3px;
+            left: 2px;
+            width: 16px;
+            height: 2px;
+            background-color: #FF69B4;
+        }
+        
+        .icon-list::after {
+            content: "";
+            position: absolute;
+            top: 9px;
+            left: 2px;
+            width: 16px;
+            height: 2px;
+            background-color: #FF69B4;
+        }
+        
+        .icon-list span {
+            position: absolute;
+            top: 15px;
+            left: 2px;
+            width: 16px;
+            height: 2px;
+            background-color: #FF69B4;
+        }
+        
+        .tab-button.active .icon-list::before,
+        .tab-button.active .icon-list::after,
+        .tab-button.active .icon-list span {
+            background-color: white;
+        }
+        
+        /* ไอคอนโน้ต */
+        .icon-note {
+            position: relative;
+            width: 20px;
+            height: 20px;
+        }
+        
+        .icon-note::before {
+            content: "";
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #FF69B4;
+            border-radius: 2px;
+        }
+        
+        .icon-note::after {
+            content: "";
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            width: 8px;
+            height: 2px;
+            background-color: #FF69B4;
+        }
+        
+        .tab-button.active .icon-note::before,
+        .tab-button.active .icon-note::after {
+            border-color: white;
+            background-color: white;
+        }
+        
+        /* ไอคอนติดต่อเรา */
+        .icon-contact {
+            position: relative;
+            width: 20px;
+            height: 20px;
+        }
+        
+        .icon-contact::before {
+            content: "";
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #FF69B4;
+            border-radius: 50%;
+        }
+        
+        .icon-contact::after {
+            content: "";
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            width: 4px;
+            height: 4px;
+            background-color: #FF69B4;
+            border-radius: 50%;
+        }
+        
+        .tab-button.active .icon-contact::before,
+        .tab-button.active .icon-contact::after {
+            border-color: white;
+            background-color: white;
+        }
+        
+        /* โลโก้ Notely ที่มุมซ้ายบน - ใช้ฟอนต์ Buttons & Patches */
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 5;
+            font-size: 36px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            font-family: 'Buttons & Patches', cursive;
+        }
+        
+        /* ปุ่ม Start */
+        .start-button {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
+            background-color: #FFFACD; /* สีเหลืองอ่อน */
+            border: none;
+            border-radius: 30px;
+            padding: 15px 60px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #FF69B4;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            font-family: 'Anuphan', sans-serif;
+        }
+        
+        .start-button:hover {
+            background-color: #FFFFE0;
+            transform: translateX(-50%) translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* เนื้อหาสำหรับแต่ละหน้า */
+        .content {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .content.active {
+            display: block;
+        }
+        
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .back-button {
+            background-color: rgba(255, 255, 255, 0.7);
+            border: none;
+            border-radius: 20px;
+            padding: 8px 15px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #FF69B4;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .back-button:hover {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .content-title {
+            font-size: 36px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* หน้าปฏิทิน */
+        #calendar {
+            background-image: url('https://i.postimg.cc/dV43mc30/1c6dc198659fd389ed847dd915010c41.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        
+        .calendar-container {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .calendar-month {
+            font-size: 32px;
+            font-weight: bold;
+            /* สีจะถูกกำหนดโดย JavaScript */
+        }
+        
+        .calendar-nav {
+            display: flex;
+        }
+        
+        .calendar-nav button {
+            background-color: #4169E1;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            margin: 0 5px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+        }
+        
+        .calendar-day-header {
+            text-align: center;
+            font-weight: bold;
+            /* สีจะถูกกำหนดโดย JavaScript */
+            padding: 10px 0;
+            font-size: 18px;
+            font-family: 'Anuphan', sans-serif;
+        }
+        
+        .calendar-day {
+            background-color: white;
+            border-radius: 10px;
+            padding: 15px 0;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 18px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            font-family: 'Anuphan', sans-serif;
+        }
+        
+        .calendar-day:hover {
+            background-color: #E6F7FF;
+            transform: scale(1.05);
+        }
+        
+        .calendar-day.today {
+            background-color: #4169E1;
+            color: white;
+            font-weight: bold;
+        }
+        
+        /* หน้ารายการ */
+        #list {
+            background-image: url('https://i.postimg.cc/5yqc8v1F/0f9c49965b9d95173ddd8077cd1aab9b.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        
+        .list-container {
+            display: flex;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            height: calc(100vh - 120px);
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .emotions-container {
+            flex: 1;
+            padding-right: 20px;
+            border-right: 2px dashed #FFB6C1;
+        }
+        
+        .emotions-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #FF69B4;
+            margin-bottom: 15px;
+        }
+        
+        .emotions-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .emotion-ball {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Anuphan', sans-serif;
+        }
+        
+        .emotion-ball:hover {
+            transform: scale(1.1);
+        }
+        
+        /* เปลี่ยนสีตามที่กำหนด */
+        .emotion-ball:nth-child(1) { background-color: #FFD3E4; } /* Happy */
+        .emotion-ball:nth-child(2) { background-color: #BCACDD; } /* Silly */
+        .emotion-ball:nth-child(3) { background-color: #FFE485; } /* Proud */
+        .emotion-ball:nth-child(4) { background-color: #F72967; } /* Angry */
+        .emotion-ball:nth-child(5) { background-color: #92D1FF; } /* Sad */
+        .emotion-ball:nth-child(6) { background-color: #E1EEAF; } /* Calm */
+        
+        .rest-reminder {
+            background-color: rgba(255, 182, 193, 0.5);
+            border: 2px solid #FF69B4;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            text-align: center;
+            color: #FF69B4;
+            font-weight: bold;
+            font-size: 16px;
+            font-family: 'Anuphan', sans-serif;
+        }
+        
+        .todo-container {
+            flex: 1;
+            padding-left: 20px;
+        }
+        
+        .todo-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #4CAF50; /* สีเขียว */
+            margin-bottom: 15px;
+            font-family: 'Buttons & Patches', cursive;
+        }
+        
+        .list-input-container {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        
+        .list-input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #4CAF50;
+            border-radius: 10px 0 0 10px;
+            font-size: 16px;
+            outline: none;
+        }
+        
+        .add-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 0 10px 10px 0;
+            padding: 0 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        
+        .list-items {
+            list-style: none;
+            max-height: calc(100vh - 280px);
+            overflow-y: auto;
+        }
+        
+        .list-item {
+            background-color: #F1F8E9; /* สีเขียวอ่อนมาก */
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .list-item-text {
+            flex: 1;
+        }
+        
+        .delete-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        /* หน้าโน้ต */
+        #note {
+            background-image: url('https://i.postimg.cc/y8nVwMMS/3f84e88e1201b38876d7821263a5117b.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        
+        .note-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            height: calc(100vh - 160px);
+            margin: 80px auto 0;
+            padding: 20px;
+        }
+        
+        .note-textarea {
+            position: absolute;
+            top: 150px;
+            left: 100px;
+            width: 600px;
+            height: 400px;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            resize: none;
+            outline: none;
+            background-color: rgba(255, 255, 255, 0.8);
+            font-family: 'Anuphan', sans-serif;
+            color: #333;
+        }
+        
+        .save-button {
+            position: absolute;
+            bottom: 30px;
+            right: 120px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        
+        /* หน้าติดต่อเรา */
+        #contact {
+            background-image: url('https://i.postimg.cc/B6xGp2pC/web-Recovered-05.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        
+        .contact-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 20px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .contact-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .contact-title {
+            font-size: 36px;
+            font-weight: bold;
+            color: #1E90FF; /* สีน้ำเงิน */
+            margin-bottom: 10px;
+            font-family: 'Buttons & Patches', cursive;
+        }
+        
+        .contact-subtitle {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        .notely-logo {
+            font-size: 48px;
+            font-weight: bold;
+            color: #1E90FF;
+            position: relative;
+            display: inline-block;
+            font-family: 'Buttons & Patches', cursive;
+        }
+        
+        .notely-logo::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #1E90FF;
+            z-index: -1;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #FFA500;
+            font-size: 18px;
+        }
+        
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #FFA500;
+            border-radius: 10px;
+            font-size: 16px;
+            outline: none;
+            font-family: 'Comic Sans MS', 'Marker Felt', 'Arial', sans-serif;
+        }
+        
+        .form-textarea {
+            height: 150px;
+            resize: none;
+        }
+        
+        .submit-button {
+            background-color: #1E90FF;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 12px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            align-self: flex-end;
+            margin-top: 10px;
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        .social-icon {
+            width: 50px;
+            height: 50px;
+            margin: 0 10px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            transform: scale(1.1);
+        }
+        
+        .instagram-icon {
+            background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
+        }
+        
+        .twitter-icon {
+            background-color: #000;
+        }
+    </style>
+</head>
+<body>
+    <!-- แท็บด้านบนขวา -->
+    <div class="nav-tabs">
+        <button class="tab-button" onclick="showTab('calendar')">
+            <div class="tab-icon icon-calendar"></div>
+            <span class="thai-font">Calendar</span>
+        </button>
+        <button class="tab-button" onclick="showTab('list')">
+            <div class="tab-icon icon-list">
+                <span></span>
+            </div>
+            <span class="thai-font">List</span>
+        </button>
+        <button class="tab-button" onclick="showTab('note')">
+            <div class="tab-icon icon-note"></div>
+            <span class="thai-font">Note</span>
+        </button>
+        <button class="tab-button" onclick="showTab('contact')">
+            <div class="tab-icon icon-contact"></div>
+            <span class="thai-font">Contact Us</span>
+        </button>
+    </div>
+    
+    <!-- โลโก้ Notely ที่มุมซ้ายบน -->
+    <div class="logo english-font">Notely</div>
+    
+    <!-- ปุ่ม Start -->
+    <button class="start-button thai-font" onclick="showTab('calendar')">Start</button>
+    
+    <!-- เนื้อหาสำหรับแต่ละหน้า -->
+    <!-- หน้าปฏิทิน -->
+    <div id="calendar" class="content">
+        <div class="content-header">
+            <button class="back-button thai-font" onclick="goHome()">กลับหน้าแรก</button>
+            <div class="content-title thai-font">ปฏิทิน</div>
+            <div></div>
+        </div>
+        <div class="calendar-container" id="calendarContainer">
+            <!-- ปฏิทินจะถูกสร้างโดย JavaScript -->
+        </div>
+    </div>
+    
+    <!-- หน้ารายการ -->
+    <div id="list" class="content">
+        <div class="content-header">
+            <button class="back-button thai-font" onclick="goHome()">กลับหน้าแรก</button>
+            <div class="content-title thai-font">รายการ</div>
+            <div></div>
+        </div>
+        <div class="list-container">
+            <div class="emotions-container">
+                <div class="emotions-title thai-font">อารมณ์วันนี้</div>
+                <div class="emotions-grid">
+                    <div class="emotion-ball thai-font">Happy</div>
+                    <div class="emotion-ball thai-font">Silly</div>
+                    <div class="emotion-ball thai-font">Proud</div>
+                    <div class="emotion-ball thai-font">Angry</div>
+                    <div class="emotion-ball thai-font">Sad</div>
+                    <div class="emotion-ball thai-font">Calm</div>
+                </div>
+                <div class="rest-reminder">do not forget to take a rest</div>
+            </div>
+            <div class="todo-container">
+                <div class="todo-title english-font">list to do.</div>
+                <div class="list-input-container">
+                    <input type="text" class="list-input thai-font" placeholder="เพิ่มรายการใหม่..." id="newListItem">
+                    <button class="add-button thai-font" onclick="addListItem()">เพิ่ม</button>
+                </div>
+                <ul class="list-items" id="listItems">
+                    <li class="list-item">
+                        <span class="list-item-text thai-font">ซื้อของในตลาด</span>
+                        <button class="delete-button" onclick="deleteListItem(this)">×</button>
+                    </li>
+                    <li class="list-item">
+                        <span class="list-item-text thai-font">ทำการบ้าน</span>
+                        <button class="delete-button" onclick="deleteListItem(this)">×</button>
+                    </li>
+                    <li class="list-item">
+                        <span class="list-item-text thai-font">ออกกำลังกาย</span>
+                        <button class="delete-button" onclick="deleteListItem(this)">×</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- หน้าโน้ต -->
+    <div id="note" class="content">
+        <div class="content-header">
+            <button class="back-button thai-font" onclick="goHome()">กลับหน้าแรก</button>
+            <div class="content-title thai-font">โน้ต</div>
+            <div></div>
+        </div>
+        <div class="note-container">
+            <textarea class="note-textarea thai-font" placeholder="เขียนโน้ตของคุณที่นี่..." id="noteContent">บันทึกสิ่งที่ต้องทำวันนี้:
+1. ไปทำงาน 8:00 น.
+2. ประชุม 10:00 น.
+3. ทำโปรเจกต์
+4. กลับบ้าน 6:00 น.</textarea>
+            <button class="save-button thai-font" onclick="saveNote()">บันทึก</button>
+        </div>
+    </div>
+    
+    <!-- หน้าติดต่อเรา -->
+    <div id="contact" class="content">
+        <div class="content-header">
+            <button class="back-button thai-font" onclick="goHome()">กลับหน้าแรก</button>
+            <div class="content-title thai-font">ติดต่อเรา</div>
+            <div></div>
+        </div>
+        <div class="contact-container">
+            <div class="contact-header">
+                <div class="contact-title english-font">Keep in touch!</div>
+                <div class="notely-logo english-font">Notely</div>
+            </div>
+            <form class="contact-form" onsubmit="submitContactForm(event)">
+                <div class="form-group">
+                    <label class="form-label thai-font" for="contactName">ชื่อ:</label>
+                    <input type="text" class="form-input thai-font" id="contactName" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label thai-font" for="contactEmail">อีเมล:</label>
+                    <input type="email" class="form-input thai-font" id="contactEmail" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label thai-font" for="contactMessage">ข้อความ:</label>
+                    <textarea class="form-textarea thai-font" id="contactMessage" required></textarea>
+                </div>
+                <button type="submit" class="submit-button thai-font">ส่งข้อความ</button>
+            </form>
+            <div class="social-icons">
+                <div class="social-icon instagram-icon">IG</div>
+                <div class="social-icon twitter-icon">X</div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // ชุดสีสำหรับชื่อเดือนและวัน
+        const colors = [
+            '#FF6B6B', '#4ECDC4', '#45B7D1', '#FFBE0B', '#FB5607', '#8338EC',
+            '#3A86FF', '#FF006E', '#8AC926', '#1982C4', '#6A4C93', '#F15BB5'
+        ];
+
+        // ชื่อเดือนภาษาอังกฤษ
+        const months = [
+            'January', 'February', 'March', 'April', 'May', 'June',
+            'July', 'August', 'September', 'October', 'November', 'December'
+        ];
+
+        // ชื่อวันภาษาอังกฤษ
+        const days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+
+        // ฟังก์ชันสุ่มสี
+        function getRandomColor() {
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        // ฟังก์ชันสร้างปฏิทิน
+        function generateCalendar(year) {
+            const calendarContainer = document.getElementById('calendarContainer');
+            calendarContainer.innerHTML = '';
+
+            for (let month = 0; month < 12; month++) {
+                // สร้าง div สำหรับเดือน
+                const monthDiv = document.createElement('div');
+                monthDiv.className = 'calendar-month-container';
+                monthDiv.style.marginBottom = '30px';
+
+                // สร้างหัวข้อเดือน
+                const monthHeader = document.createElement('div');
+                monthHeader.className = 'calendar-header';
+                
+                const monthTitle = document.createElement('div');
+                monthTitle.className = 'calendar-month english-font';
+                monthTitle.textContent = months[month] + ' ' + year;
+                monthTitle.style.color = getRandomColor(); // สุ่มสีชื่อเดือน
+                
+                monthHeader.appendChild(monthTitle);
+                monthDiv.appendChild(monthHeader);
+
+                // สร้างตารางวัน
+                const monthGrid = document.createElement('div');
+                monthGrid.className = 'calendar-grid';
+
+                // สร้างหัวตาราง (วัน)
+                for (let i = 0; i < 7; i++) {
+                    const dayHeader = document.createElement('div');
+                    dayHeader.className = 'calendar-day-header thai-font';
+                    dayHeader.textContent = days[i];
+                    dayHeader.style.color = getRandomColor(); // สุ่มสีวัน
+                    monthGrid.appendChild(dayHeader);
+                }
+
+                // หาจำนวนวันในเดือน
+                const daysInMonth = new Date(year, month + 1, 0).getDate();
+                // หาวันแรกของเดือน
+                const firstDay = new Date(year, month, 1).getDay();
+
+                // เพิ่มวันที่ว่างก่อนหน้า
+                for (let i = 0; i < firstDay; i++) {
+                    const emptyDay = document.createElement('div');
+                    emptyDay.className = 'calendar-day';
+                    monthGrid.appendChild(emptyDay);
+                }
+
+                // เพิ่มวันที่ในเดือน
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const dayDiv = document.createElement('div');
+                    dayDiv.className = 'calendar-day thai-font';
+                    dayDiv.textContent = day;
+
+                    // ตรวจสอบว่าเป็นวันนี้หรือไม่
+                    const today = new Date();
+                    if (year === today.getFullYear() && 
+                        month === today.getMonth() && 
+                        day === today.getDate()) {
+                        dayDiv.classList.add('today');
+                    }
+
+                    // เพิ่ม event click
+                    dayDiv.addEventListener('click', function() {
+                        const selectedDate = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                        showTab('list');
+                        // ส่งข้อมูลวันที่ไปยังหน้า list (ถ้าต้องการใช้งาน)
+                        // ในที่นี้เราแค่เปลี่ยนหน้าไปยัง list
+                    });
+
+                    monthGrid.appendChild(dayDiv);
+                }
+
+                monthDiv.appendChild(monthGrid);
+                calendarContainer.appendChild(monthDiv);
+            }
+        }
+
+        // ฟังก์ชันแสดงแท็บ
+        function showTab(tabName) {
+            // ซ่อนเนื้อหาทั้งหมด
+            const contents = document.querySelectorAll('.content');
+            contents.forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // แสดงเนื้อหาที่เลือก
+            document.getElementById(tabName).classList.add('active');
+            
+            // อัปเดตปุ่มแท็บ
+            const tabButtons = document.querySelectorAll('.tab-button');
+            tabButtons.forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            // เพิ่มคลาส active ให้กับปุ่มที่คลิก
+            event.target.closest('.tab-button').classList.add('active');
+            
+            // ถ้าเป็นหน้าปฏิทิน ให้สร้างปฏิทิน
+            if (tabName === 'calendar') {
+                generateCalendar(2023);
+            }
+        }
+        
+        // ฟังก์ชันกลับหน้าแรก
+        function goHome() {
+            const contents = document.querySelectorAll('.content');
+            contents.forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            const tabButtons = document.querySelectorAll('.tab-button');
+            tabButtons.forEach(button => {
+                button.classList.remove('active');
+            });
+        }
+        
+        // ฟังก์ชันเพิ่มรายการ
+        function addListItem() {
+            const input = document.getElementById('newListItem');
+            const listItems = document.getElementById('listItems');
+            
+            if (input.value.trim() !== '') {
+                const newItem = document.createElement('li');
+                newItem.className = 'list-item';
+                newItem.innerHTML = `
+                    <span class="list-item-text thai-font">${input.value}</span>
+                    <button class="delete-button" onclick="deleteListItem(this)">×</button>
+                `;
+                listItems.appendChild(newItem);
+                input.value = '';
+            }
+        }
+        
+        // ฟังก์ชันลบรายการ
+        function deleteListItem(button) {
+            button.parentElement.remove();
+        }
+        
+        // ฟังก์ชันบันทึกโน้ต
+        function saveNote() {
+            const noteContent = document.getElementById('noteContent').value;
+            // ในที่นี้เราจะแค่แสดงข้อความแจ้งเตือน
+            // ในการใช้งานจริง คุณอาจต้องการบันทึกลงใน localStorage หรือส่งไปยังเซิร์ฟเวอร์
+            alert('บันทึกโน้ตเรียบร้อยแล้ว!');
+        }
+        
+        // ฟังก์ชันส่งฟอร์มติดต่อ
+        function submitContactForm(event) {
+            event.preventDefault();
+            // ในที่นี้เราจะแค่แสดงข้อความแจ้งเตือน
+            // ในการใช้งานจริง คุณอาจต้องการส่งข้อมูลไปยังเซิร์ฟเวอร์
+            alert('ส่งข้อความเรียบร้อยแล้ว!');
+            document.getElementById('contactName').value = '';
+            document.getElementById('contactEmail').value = '';
+            document.getElementById('contactMessage').value = '';
+        }
+    </script>
+</body>
+</html>
